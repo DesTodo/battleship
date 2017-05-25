@@ -57,7 +57,7 @@ Enter the squares for the two-unit ship, like this Z1 Z2:"
   def battle_phase
     #
     @players_grid.print_self
-    # ask the user where they would like to Shoot
+
     # @computers_grid.receive_shot(users_input)
     # If the response is hit, then mark @players_view_of_computers_grid as a hit
     # if the response is miss, then mark @players_view_of_computers_grid as a miss
@@ -65,8 +65,15 @@ Enter the squares for the two-unit ship, like this Z1 Z2:"
     system "clear"
     p "Attack your opponent! Choose a square coordinate where to shoot, like this W1:"
     users_input = gets.chomp.split('')
-    @computers_grid.receive_shot(users_input[0], users_input[1].to_i)
+    outcome = @computers_grid.receive_shot(users_input[0], users_input[1].to_i)
+    if outcome.is_a? Numeric
+      @players_view_of_computers_grid.set_a_hit(users_input[0], users_input[1].to_i)
+    else
+      @players_view_of_computers_grid.set_a_miss(users_input[0], users_input[1].to_i)
+    end
+
     @computers_grid = Board.new
+    @computers_grid.set_a_miss(users_input[0], users_input[1].to_i)
 
 
     @computers_grid.print_self
@@ -75,9 +82,7 @@ Enter the squares for the two-unit ship, like this Z1 Z2:"
 
   end
 
-  # puts "Enter your chosen ship coordinates like this: E1 E2"
-  # puts "Take a shot!"
-  # @shot_coordinate = gets.chomp.upcase.split('')
+
 
 end
 

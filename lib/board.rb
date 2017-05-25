@@ -25,8 +25,7 @@ attr_accessor :coordinates
     puts "==========="
   end
 
-  # Pass in a value like (A1 A2)
-  # Split the values into an array if necessary, then split the values A and 1 apart.
+
   # Call test_valid_coordinate
   # If Valid, change the values of these coordinates to the ship, then return a string that says, "Ship placed"
   # If they are Invalid, return a string that says "This is not valid"
@@ -37,8 +36,6 @@ attr_accessor :coordinates
     # Must add valudation for this ship
 
     list_of_coordinates.each do |coordinate|
-      # coordinate[0] is the letter_coordinate
-      # coordinate[1] - 1 is the number_coordinate
       @coordinates[coordinate[0]][coordinate[1].to_i - 1] = ship_number
     end
     "success"
@@ -54,6 +51,8 @@ attr_accessor :coordinates
 
     if !valid_coordinate?(letter_coordinate, number_coordinate)
       false
+      p "Invalid coordinate!! Make sure you choose a number 1-4 and letter A-D."
+      gets.chomp
     elsif coordinate_value.is_a? Numeric
       coordinate_value = "H"
       if ship_sunk?(coordinate_value.to_i)
@@ -77,10 +76,7 @@ attr_accessor :coordinates
     end
     return_value
   end
-  # Then test that both of the input values are not outside the size odf the board
-  # For example, if the number is greater than 5 or less than 1, then it should fail.
-  # For example, if you pass the letter into the @coordinates and it returns Nil, then
-  # that is an invalid value.
+
   def valid_coordinate?(letter_coordinate, number_coordinate)
     if @coordinates[letter_coordinate].nil? || number_coordinate > 5 || number_coordinate < 1
       p "Invalid coordinate."
@@ -90,7 +86,7 @@ attr_accessor :coordinates
     end
   end
 
-  # These methods are for viewing the opponents board
+  #  Methods to view the opponent's board
   def set_a_miss(letter_coordinate, number_coordinate)
     @coordinates[letter_coordinate][number_coordinate - 1] = "M"
   end
