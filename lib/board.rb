@@ -30,6 +30,7 @@ attr_accessor :coordinates
   # Call test_valid_coordinate
   # If Valid, change the values of these coordinates to the ship, then return a string that says, "Ship placed"
   # If they are Invalid, return a string that says "This is not valid"
+  # ship_number == ship_value; first placed ship --> 1 per square; 2nd --> 2 per square
   def place_ship(ship_number, ship_coordinates)
     list_of_coordinates = ship_coordinates.upcase.split(' ')
 
@@ -49,7 +50,7 @@ attr_accessor :coordinates
   # If it does not contain a ship, do not do anything, and return a string that says, "You missed"
   def receive_shot(letter_coordinate, number_coordinate)
 
-    coordinate_value = @coordinates[letter_coordinate][number_coordinate - 1]
+    coordinate_value = @coordinates[letter_coordinate][number_coordinate.to_i - 1]
 
     if !valid_coordinate?(letter_coordinate, number_coordinate)
       false

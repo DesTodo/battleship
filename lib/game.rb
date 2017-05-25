@@ -36,13 +36,13 @@ You now need to layout your two ships.
 The first is two units long and the
 second is three units long.
 The grid has A1 at the top left and D4 at the bottom right.
-Enter the squares for the two-unit ship:"
+Enter the squares for the two-unit ship, like this Z1 Z2:"
 
     first_ship = gets.chomp
 		@players_grid.place_ship(1, first_ship)
 
     system "clear"
-    p "Enter the squares for the three-unit ship:"
+    p "Enter the squares for your three-unit ship, like this Y1 Y2 Y3:"
     second_ship = gets.chomp
     @players_grid.place_ship(2, second_ship)
 
@@ -63,15 +63,16 @@ Enter the squares for the two-unit ship:"
     # if the response is miss, then mark @players_view_of_computers_grid as a miss
     # if the response is sunk, then check if the computer has any ships left
     system "clear"
-    p "Choose where to shoot."
-    users_input = gets.chomp
-    @computers_grid.receive_shot(users_input)
+    p "Attack your opponent! Choose a square coordinate where to shoot, like this W1:"
+    users_input = gets.chomp.split('')
+    @computers_grid.receive_shot(users_input[0], users_input[1].to_i)
+    @computers_grid = Board.new
 
 
     @computers_grid.print_self
     gets.chomp
     @players_grid = Board.new
-    @computers_grid = Board.new
+
   end
 
   # puts "Enter your chosen ship coordinates like this: E1 E2"
