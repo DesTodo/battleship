@@ -36,7 +36,6 @@ class BoardTest < Minitest::Test
     assert_equal "hit", board.receive_shot("A", 1)
     assert_equal "hit", board.receive_shot("A", 2)
     assert_equal "miss", board.receive_shot("A", 3)
-
   end
 
   def test_ship_sunk?
@@ -44,7 +43,6 @@ class BoardTest < Minitest::Test
     board.place_ship(1, "A1 A2")
 
     refute board.ship_sunk?(1)
-
     assert board.ship_sunk?(2)
   end
 
@@ -58,10 +56,7 @@ class BoardTest < Minitest::Test
 
     refute board.valid_coordinate?("A", 6)
     refute board.valid_coordinate?("G", 3)
-
     assert board.valid_coordinate?("A", 5)
     assert board.valid_coordinate?("D", 1)
-
   end
-
 end

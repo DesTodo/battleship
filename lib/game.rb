@@ -1,14 +1,15 @@
 require './lib/board'
+require './lib/message'
 
 class Game
-  attr_accessor :players_grid
-				  :computers_grid
-          :players_view_of_computers_grid
+  attr_accessor :player_grid, :computer_grid, :player_view_of_computer_grid,
+                :message
 
   def initialize
-    @players_grid = Board.new
-    @computers_grid = Board.new
-    @players_view_of_computers_grid = Board.new
+    @player_grid                   = Board.new
+    @computer_grid                 = Board.new
+    @player_view_of_computer_grid  = Board.new
+    @message                       = Message.new
   end
 
 	def play_game
@@ -31,37 +32,21 @@ class Game
 
 	def ship_layout_phase
     system "clear"
-		puts "I have laid out my ships on the grid.
-You now need to layout your two ships.
-The first is two units long and the
-second is three units long.
-The grid has A1 at the top left and D4 at the bottom right.
-Enter the squares for the two-unit ship, like this Z1 Z2:"
-
+    @message.ship_layout_phase_message
     first_ship = gets.chomp
 		@players_grid.place_ship(1, first_ship)
-
     system "clear"
     p "Enter the squares for your three-unit ship, like this Y1 Y2 Y3:"
     second_ship = gets.chomp
     @players_grid.place_ship(2, second_ship)
-
     @computers_grid.place_ship(1, "A1 A2")
     @computers_grid.place_ship(2, "C5 D5 E5")
 
     battle_phase
-
-
 	end
 
   def battle_phase
-    #
-    @players_grid.print_self
-
-    # @computers_grid.receive_shot(users_input)
-    # If the response is hit, then mark @players_view_of_computers_grid as a hit
-    # if the response is miss, then mark @players_view_of_computers_grid as a miss
-    # if the response is sunk, then check if the computer has any ships left
+    @players_grid.print_board
     system "clear"
     p "Attack your opponent! Choose a square coordinate where to shoot, like this W1:"
     users_input = gets.chomp.split('')
@@ -71,18 +56,12 @@ Enter the squares for the two-unit ship, like this Z1 Z2:"
     else
       @players_view_of_computers_grid.set_a_miss(users_input[0], users_input[1].to_i)
     end
-
     @computers_grid = Board.new
     @computers_grid.set_a_miss(users_input[0], users_input[1].to_i)
-
-
-    @computers_grid.print_self
+    @computers_grid.print_board
     gets.chomp
     @players_grid = Board.new
-
   end
-
-
 
 end
 

@@ -1,8 +1,6 @@
 class Player
-  attr_accessor :my_grid
-				  :opponents_grid
-
-	attr_reader :name
+  attr_accessor :my_grid, :opponents_grid
+  attr_reader   :name
 
 	def initialize(name)
 		@name = name

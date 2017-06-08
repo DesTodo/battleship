@@ -1,54 +1,44 @@
-require 'pry'
-
 class Board
-attr_accessor :coordinates
+  attr_accessor :coordinates
 
 	def initialize
-		coordinate_row = [" ", " ", " ", " ", " "]
     @coordinates = {
-			"A" => coordinate_row.dup,
-			"B" => coordinate_row.dup,
-			"C" => coordinate_row.dup,
-			"D" => coordinate_row.dup,
-			"E" => coordinate_row.dup
-		}
+                  "A" => coordinate_row.dup,
+                  "B" => coordinate_row.dup,
+                  "C" => coordinate_row.dup,
+                  "D" => coordinate_row.dup,
+                  "E" => coordinate_row.dup
+  	              }
   end
 
-  def print_self
+  def coordinate_row
+    [" ", " ", " ", " ", " "]
+  end
+
+  def print_board
     system "clear"
-    puts "==========="
-    puts ". 1 2 3 4 5"
+    puts "======================"
+    puts "   1   2   3   4   5  "
     @coordinates.each do |key, coordinate_row|
       print key + " "
       puts coordinate_row.join(" ")
     end
-    puts "==========="
+    puts "====================="
   end
 
+  def input_range(input)
+  end
 
-  # Call test_valid_coordinate
-  # If Valid, change the values of these coordinates to the ship, then return a string that says, "Ship placed"
-  # If they are Invalid, return a string that says "This is not valid"
-  # ship_number == ship_value; first placed ship --> 1 per square; 2nd --> 2 per square
-  def place_ship(ship_number, ship_coordinates)
-    list_of_coordinates = ship_coordinates.upcase.split(' ')
-
-    # Must add valudation for this ship
-
+  def place_ship(ship_number, coordinates)
+    list_of_coordinates = coordinates.upcase.split(' ')
     list_of_coordinates.each do |coordinate|
       @coordinates[coordinate[0]][coordinate[1].to_i - 1] = ship_number
     end
     "success"
   end
 
-  # Shoot at the board
-  # Test if the coordinate has a ship on it
-  # If it contains a ship, mark it struck, and return a string that says, "Ship Hit"
-  # If it does not contain a ship, do not do anything, and return a string that says, "You missed"
   def receive_shot(letter_coordinate, number_coordinate)
-
     coordinate_value = @coordinates[letter_coordinate][number_coordinate.to_i - 1]
-
     if !valid_coordinate?(letter_coordinate, number_coordinate)
       false
       p "Invalid coordinate!! Make sure you choose a number 1-4 and letter A-D."
@@ -86,7 +76,6 @@ attr_accessor :coordinates
     end
   end
 
-  #  Methods to view the opponent's board
   def set_a_miss(letter_coordinate, number_coordinate)
     @coordinates[letter_coordinate][number_coordinate - 1] = "M"
   end
@@ -96,7 +85,7 @@ attr_accessor :coordinates
   end
 end
 
-# board = Board.new
-# board.place_ship(1, "A1 A2 A3")
-# board.place_ship(2, "C5 D5 E5")
-# board.print_self
+board = Board.new
+board.place_ship(1, "A1 A2 A3")
+board.place_ship(2, "C5 D5 E5")
+board.print_board
